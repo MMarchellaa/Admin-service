@@ -1,16 +1,20 @@
 package com.mihalkovich.adminservice.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.temporal.WeekFields;
+import javax.persistence.ManyToOne;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@Entity
 public class Timetable {
 
     @Id
@@ -18,9 +22,9 @@ public class Timetable {
     private Long id;
 
     @Column
-    private WeekFields dayOfWeek;
+    private String dayOfWeek;
 
-    @Column
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private Group group;
 
     @Column
