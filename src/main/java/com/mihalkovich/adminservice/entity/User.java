@@ -9,10 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
 @Data
+@Table(name = "userity")
 public class User implements UserDetails {
 
     @Id
@@ -24,6 +26,9 @@ public class User implements UserDetails {
 
     @Column
     private String password;
+
+    @Column
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
