@@ -1,20 +1,24 @@
 package com.mihalkovich.adminservice.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.List;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "study_schedule")
 public class Timetable {
 
     @Id
@@ -24,12 +28,15 @@ public class Timetable {
     @Column
     private String dayOfWeek;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @OneToOne
     private Group group;
 
-    @Column
-    private int lessonNumber;
+    @ManyToMany
+    private List<Lesson> lessonsQuery;
 
-    @Column
-    private String lessonTitle;
+    public Timetable(String dayOfWeek, Group group, List<Lesson> lessonsQuery) {
+        this.dayOfWeek = dayOfWeek;
+        this.group = group;
+        this.lessonsQuery = lessonsQuery;
+    }
 }
