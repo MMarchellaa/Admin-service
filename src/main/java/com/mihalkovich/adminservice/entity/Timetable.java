@@ -32,11 +32,11 @@ public class Timetable {
     private Group group;
 
     @ManyToMany
-    private List<Lesson> lessonsQuery;
+    private List<Lesson> lessons;
 
-    public Timetable(String dayOfWeek, Group group, List<Lesson> lessonsQuery) {
+    public Timetable(String dayOfWeek, Group group, List<Lesson> lessons) {
         this.dayOfWeek = dayOfWeek;
         this.group = group;
-        this.lessonsQuery = lessonsQuery;
+        this.lessons = lessons;
     }
 }

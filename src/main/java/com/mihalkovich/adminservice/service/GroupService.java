@@ -1,48 +1,61 @@
 package com.mihalkovich.adminservice.service;
 
-import com.mihalkovich.adminservice.dto.GroupDTO;
+import com.mihalkovich.adminservice.dto.GroupDto;
 import com.mihalkovich.adminservice.entity.Group;
+import com.mihalkovich.adminservice.mapper.GroupMapper;
 import com.mihalkovich.adminservice.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GroupService {
 
-    @Autowired
-    private GroupRepository groupRepository;
+    private final GroupRepository groupRepository;
 
-    public List<Group> getGroups(){
-        return groupRepository.findAll();
+    private final GroupMapper groupMapper;
+
+    @Autowired
+    public GroupService(GroupRepository groupRepository, GroupMapper groupMapper) {
+        this.groupRepository = groupRepository;
+        this.groupMapper = groupMapper;
     }
 
-    public Group saveGroup(GroupDTO groupDTO){
+    public List<GroupDto> getGroups(){
+        return groupRepository.findAll().stream()
+                .map(groupMapper::groupToGroupDto)
+                .collect(Collectors.toList());
+    }
+
+    public GroupDto saveGroup(GroupDto groupDto){
 
         Group group = new Group();
-        group.setCourse(groupDTO.getCourse());
-        group.setGroup(groupDTO.getGroup());
+        group.setCourse(groupDto.getCourse());
+        group.setGroup(groupDto.getGroup());
+        groupRepository.save(group);
 
-        return groupRepository.save(group);
+        return groupDto;
     }
 
     public Group getGroup(String course, String groupName){
         return groupRepository.findGroupByCourseAndGroup(course, groupName).orElseThrow();
     }
 
-    public Group deleteGroup(GroupDTO groupDTO){
-        Group group = getGroup(groupDTO.getCourse(), groupDTO.getGroup());
+    public GroupDto deleteGroup(GroupDto groupDto){
+        Group group = getGroup(groupDto.getCourse(), groupDto.getGroup());
         groupRepository.delete(group);
 
-        return group;
+        return groupDto;
     }
 
-    public Group updateGroup(GroupDTO groupDTOBefore, GroupDTO groupDTOAfter) {
-        Group group = getGroup(groupDTOBefore.getCourse(), groupDTOBefore.getGroup());
-        group.setCourse(groupDTOAfter.getCourse());
-        group.setGroup(groupDTOAfter.getGroup());
+    public GroupDto updateGroup(GroupDto groupDtoBefore, GroupDto groupDtoAfter) {
+        Group group = getGroup(groupDtoBefore.getCourse(), groupDtoBefore.getGroup());
+        group.setCourse(groupDtoAfter.getCourse());
+        group.setGroup(groupDtoAfter.getGroup());
+        groupRepository.save(group);
 
-        return groupRepository.save(group);
+        return groupDtoAfter;
     }
 }

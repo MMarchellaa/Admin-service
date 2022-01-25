@@ -1,15 +1,16 @@
 package com.mihalkovich.adminservice.dto;
 
 import com.mihalkovich.adminservice.entity.Group;
+import com.mihalkovich.adminservice.entity.Lesson;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class TimetableDTO {
+public class TimetableDto {
 
     private String dayOfWeek;
     private Group group;
-    private List<LessonDTO> lessons;
+    private List<Lesson> lessons;
 
 }

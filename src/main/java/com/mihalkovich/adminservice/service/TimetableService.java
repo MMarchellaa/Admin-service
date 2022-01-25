@@ -1,53 +1,67 @@
 package com.mihalkovich.adminservice.service;
 
-import com.mihalkovich.adminservice.dto.TimetableDTO;
+import com.mihalkovich.adminservice.dto.TimetableDto;
 import com.mihalkovich.adminservice.entity.Group;
 import com.mihalkovich.adminservice.entity.Timetable;
+import com.mihalkovich.adminservice.mapper.TimetableMapper;
 import com.mihalkovich.adminservice.repository.TimetableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class TimetableService {
 
-    @Autowired
-    private TimetableRepository timetableRepository;
+    private final TimetableRepository timetableRepository;
+
+    private final GroupService groupService;
+
+    private final TimetableMapper timetableMapper;
 
     @Autowired
-    private GroupService groupService;
+    public TimetableService(TimetableRepository timetableRepository, GroupService groupService, TimetableMapper timetableMapper) {
+        this.timetableRepository = timetableRepository;
+        this.groupService = groupService;
+        this.timetableMapper = timetableMapper;
+    }
 
-    public List<Timetable> getTimetable(String course, String groupName){
+    public List<TimetableDto> getTimetable(String course, String groupName){
         Group group = groupService.getGroup(course, groupName);
 
-        return timetableRepository.findAllByGroup(group).orElse(new ArrayList<>());
+        return timetableRepository.findAllByGroup(group).orElse(new ArrayList<>())
+                .stream()
+                .map(timetableMapper::timetableToTimetableDto)
+                .collect(Collectors.toList());
     }
 
     public Timetable getSingleTimetable(Group group, String dayOfWeek){
         return timetableRepository.getTimetableByDayOfWeekAndGroup(dayOfWeek, group).orElse(new Timetable());
     }
 
-    public Timetable saveTimetable(TimetableDTO timetableDTO){
-        Timetable timetable = new Timetable(timetableDTO.getDayOfWeek(), timetableDTO.getGroup(), timetableDTO.getLessonsQuery());
+    public TimetableDto saveTimetable(TimetableDto timetableDto){
+        Timetable timetable = new Timetable(timetableDto.getDayOfWeek(), timetableDto.getGroup(), timetableDto.getLessons());
+        timetableRepository.save(timetable);
 
-        return timetableRepository.save(timetable);
+        return timetableDto;
     }
 
-    public Timetable deleteTimetable(TimetableDTO timetableDTO){
-        Timetable timetable = getSingleTimetable(timetableDTO.getGroup(), timetableDTO.getDayOfWeek());
+    public TimetableDto deleteTimetable(TimetableDto timetableDto){
+        Timetable timetable = getSingleTimetable(timetableDto.getGroup(), timetableDto.getDayOfWeek());
         timetableRepository.delete(timetable);
 
-        return timetable;
+        return timetableDto;
     }
 
-    public Timetable updateTimetable(TimetableDTO timetableDTOBefore, TimetableDTO timetableDTOAfter) {
-        Timetable timetable = getSingleTimetable(timetableDTOBefore.getGroup(), timetableDTOBefore.getDayOfWeek());
-        timetable.setGroup(timetableDTOAfter.getGroup());
-        timetable.setDayOfWeek(timetableDTOAfter.getDayOfWeek());
-        timetable.setLessonsQuery(timetableDTOAfter.getLessonsQuery());
+    public TimetableDto updateTimetable(TimetableDto timetableDtoBefore, TimetableDto timetableDtoAfter) {
+        Timetable timetable = getSingleTimetable(timetableDtoBefore.getGroup(), timetableDtoBefore.getDayOfWeek());
+        timetable.setGroup(timetableDtoAfter.getGroup());
+        timetable.setDayOfWeek(timetableDtoAfter.getDayOfWeek());
+        timetable.setLessons(timetableDtoAfter.getLessons());
+        timetableRepository.save(timetable);
 
-        return timetableRepository.save(timetable);
+        return timetableDtoAfter;
     }
 }

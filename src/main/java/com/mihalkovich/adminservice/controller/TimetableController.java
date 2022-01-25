@@ -1,57 +1,49 @@
 package com.mihalkovich.adminservice.controller;
 
-import com.mihalkovich.adminservice.dto.TimetableDTO;
-import com.mihalkovich.adminservice.facade.TimetableFacade;
+import com.mihalkovich.adminservice.dto.TimetableDto;
 import com.mihalkovich.adminservice.service.TimetableService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class TimetableController {
 
-    @Autowired
-    TimetableService timetableService;
+    private final TimetableService timetableService;
 
     @Autowired
-    TimetableFacade timetableFacade;
-
-    @GetMapping("timetable/get/{course}/{group}")
-    public List<TimetableDTO> getTimetable(@PathVariable("course") String course ,@PathVariable("group") String groupName){
-
-        return timetableService.getTimetable(course, groupName)
-                .stream()
-                .map(timetableFacade::timetableToTimetableDTO)
-                .collect(Collectors.toList());
+    public TimetableController(TimetableService timetableService) {
+        this.timetableService = timetableService;
     }
 
-    @PostMapping("timetable/update")
-    public ResponseEntity<TimetableDTO> updateTimetable(@RequestBody TimetableDTO timetableDTOBefore, @RequestBody TimetableDTO timetableDTOAfter){
+    @GetMapping("timetable/{course}/{group}")
+    public List<TimetableDto> getTimetable(@PathVariable("course") String course , @PathVariable("group") String groupName){
 
-        TimetableDTO timetable = timetableFacade.timetableToTimetableDTO(timetableService.updateTimetable(timetableDTOBefore, timetableDTOAfter));
-
-        return new ResponseEntity<>(timetable, HttpStatus.OK);
+        return timetableService.getTimetable(course, groupName);
     }
 
-    @PostMapping("timetable/delete")
-    public ResponseEntity<TimetableDTO> deleteTimetable(@RequestBody TimetableDTO timetableDTO){
-        TimetableDTO timetable = timetableFacade.timetableToTimetableDTO(timetableService.deleteTimetable(timetableDTO));
+    @PutMapping("timetable")
+    public TimetableDto updateTimetable(@RequestBody TimetableDto timetableDtoBefore, @RequestBody TimetableDto timetableDtoAfter){
 
-        return new ResponseEntity<>(timetable, HttpStatus.OK);
+        return timetableService.updateTimetable(timetableDtoBefore, timetableDtoAfter);
     }
 
-    @PostMapping("timetable/save")
-    public ResponseEntity<TimetableDTO> saveTimetable(@RequestBody TimetableDTO timetableDTO){
-        TimetableDTO timetable = timetableFacade.timetableToTimetableDTO(timetableService.saveTimetable(timetableDTO));
+    @DeleteMapping("timetable")
+    public TimetableDto deleteTimetable(@RequestBody TimetableDto timetableDTO){
 
-        return new ResponseEntity<>(timetable, HttpStatus.OK);
+        return timetableService.deleteTimetable(timetableDTO);
+    }
+
+    @PostMapping("timetable")
+    public TimetableDto saveTimetable(@RequestBody TimetableDto timetableDTO){
+
+        return timetableService.saveTimetable(timetableDTO);
     }
 }

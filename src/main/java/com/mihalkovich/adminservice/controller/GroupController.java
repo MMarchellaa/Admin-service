@@ -1,55 +1,48 @@
 package com.mihalkovich.adminservice.controller;
 
-import com.mihalkovich.adminservice.dto.GroupDTO;
-import com.mihalkovich.adminservice.facade.GroupFacade;
+import com.mihalkovich.adminservice.dto.GroupDto;
 import com.mihalkovich.adminservice.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class GroupController {
 
+    private final GroupService groupService;
+
     @Autowired
-    GroupService groupService;
-    @Autowired
-    GroupFacade groupFacade;
-
-    @GetMapping("group/all")
-    public ResponseEntity<List<GroupDTO>> getAllGroups(){
-        List<GroupDTO> allGroupsDTO = groupService.getGroups()
-                .stream()
-                .map(groupFacade::groupToGroupDTO)
-                .collect(Collectors.toList());
-
-        return new ResponseEntity<>(allGroupsDTO, HttpStatus.OK);
+    public GroupController(GroupService groupService) {
+        this.groupService = groupService;
     }
 
-    @PostMapping("group/save")
-    public ResponseEntity<GroupDTO> saveGroup(@RequestBody GroupDTO groupDTO){
-        GroupDTO group = groupFacade.groupToGroupDTO(groupService.saveGroup(groupDTO));
+    @GetMapping("group")
+    public List<GroupDto> getAllGroups(){
 
-        return new ResponseEntity<>(group, HttpStatus.OK);
+        return groupService.getGroups();
     }
 
-    @PostMapping("group/delete")
-    public ResponseEntity<GroupDTO> deleteGroup(@RequestBody GroupDTO groupDTO){
-        GroupDTO group = groupFacade.groupToGroupDTO(groupService.deleteGroup(groupDTO));
+    @PostMapping("group")
+    public GroupDto saveGroup(@RequestBody GroupDto groupDto){
 
-        return new ResponseEntity<>(group, HttpStatus.OK);
+        return groupService.saveGroup(groupDto);
     }
 
-    @PostMapping("group/update")
-    public ResponseEntity<GroupDTO> updateGroup(@RequestBody GroupDTO groupDTOBefore, @RequestBody GroupDTO groupDTOAfter){
-        GroupDTO group = groupFacade.groupToGroupDTO(groupService.updateGroup(groupDTOBefore, groupDTOAfter));
+    @DeleteMapping("group")
+    public GroupDto deleteGroup(@RequestBody GroupDto groupDto){
 
-        return new ResponseEntity<>(group, HttpStatus.OK);
+        return groupService.deleteGroup(groupDto);
+    }
+
+    @PutMapping("group")
+    public GroupDto updateGroup(@RequestBody GroupDto groupDtoBefore, @RequestBody GroupDto groupDtoAfter){
+
+        return groupService.updateGroup(groupDtoBefore, groupDtoAfter);
     }
 }
