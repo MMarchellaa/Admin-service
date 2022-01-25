@@ -4,8 +4,9 @@ import com.mihalkovich.adminservice.dto.TimetableDto;
 import com.mihalkovich.adminservice.entity.Timetable;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = LessonMapper.class)
 public interface TimetableMapper {
+
     Timetable toTimetable(TimetableDto timetableDto);
 
     TimetableDto toDto(Timetable timetable);

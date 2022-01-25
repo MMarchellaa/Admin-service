@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface LessonMapper {
+
     Lesson toLesson(LessonDto lessonDto);
 
     LessonDto toDto(Lesson lesson);

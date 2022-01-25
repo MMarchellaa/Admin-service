@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/group")
 public class GroupController {
 
     private final GroupService groupService;
@@ -23,27 +25,27 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    @GetMapping("group")
+    @GetMapping
     public List<GroupDto> getAllGroups(){
 
         return groupService.getGroups();
     }
 
-    @PostMapping("group")
+    @PostMapping
     public GroupDto saveGroup(@RequestBody GroupDto groupDto){
 
         return groupService.saveGroup(groupDto);
     }
 
-    @DeleteMapping("group/{id}")
+    @DeleteMapping("/{id}")
     public GroupDto deleteGroup(@PathVariable String id){
 
         return groupService.deleteGroup(id);
     }
 
-    @PutMapping("group/{id}")
-    public GroupDto updateGroup(@PathVariable String id, @RequestBody GroupDto groupDto){
+    @PutMapping
+    public GroupDto updateGroup(@RequestBody GroupDto groupDto){
 
-        return groupService.updateGroup(id, groupDto);
+        return groupService.updateGroup(groupDto);
     }
 }

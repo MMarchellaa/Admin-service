@@ -46,8 +46,8 @@ public class GroupService {
         return groupMapper.toDto(group);
     }
 
-    public GroupDto updateGroup(String id, GroupDto groupDto) {
-        Group group = groupRepository.findGroupById(Long.parseLong(id));
+    public GroupDto updateGroup(GroupDto groupDto) {
+        Group group = groupRepository.findGroupById(groupDto.getId());
         group.setCourse(groupDto.getCourse());
         group.setGroup(groupDto.getGroup());
         groupRepository.save(group);

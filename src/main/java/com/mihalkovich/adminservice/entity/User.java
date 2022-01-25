@@ -1,5 +1,6 @@
 package com.mihalkovich.adminservice.entity;
 
+import com.mihalkovich.adminservice.entity.enums.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,7 +29,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column
-    private String role;
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

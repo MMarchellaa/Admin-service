@@ -33,10 +33,4 @@ public class Timetable {
 
     @ManyToMany
     private List<Lesson> lessons;
-
-    public Timetable(String dayOfWeek, Group group, List<Lesson> lessons) {
-        this.dayOfWeek = dayOfWeek;
-        this.group = group;
-        this.lessons = lessons;
-    }
 }

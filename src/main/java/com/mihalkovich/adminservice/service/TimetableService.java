@@ -50,11 +50,12 @@ public class TimetableService {
         return timetableMapper.toDto(timetable);
     }
 
-    public TimetableDto updateTimetable(String id, TimetableDto timetableDto) {
-        Timetable timetable = timetableRepository.findTimetableById(Long.parseLong(id));
-        timetable.setGroup(timetableDto.getGroup());
-        timetable.setDayOfWeek(timetableDto.getDayOfWeek());
-        timetable.setLessons(timetableDto.getLessons());
+    public TimetableDto updateTimetable(TimetableDto timetableDto) {
+        Timetable timetable1 = timetableMapper.toTimetable(timetableDto);
+        Timetable timetable = timetableRepository.findTimetableById(timetableDto.getId());
+        timetable.setGroup(timetable1.getGroup());
+        timetable.setDayOfWeek(timetable1.getDayOfWeek());
+        timetable.setLessons(timetable1.getLessons());
         timetableRepository.save(timetable);
 
         return timetableMapper.toDto(timetable);

@@ -42,8 +42,8 @@ public class LessonService {
         return lessonMapper.toDto(lesson);
     }
 
-    public LessonDto updateLesson(String id, LessonDto lessonDto) {
-        Lesson lesson = lessonRepository.findLessonById(Long.parseLong(id));
+    public LessonDto updateLesson(LessonDto lessonDto) {
+        Lesson lesson = lessonRepository.findLessonById(lessonDto.getId());
         lesson.setTeacher(lessonDto.getTeacher());
         lesson.setLessonTitle(lessonDto.getLessonTitle());
         lesson.setAuditory(lessonDto.getAuditory());

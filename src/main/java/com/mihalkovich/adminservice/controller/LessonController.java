@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/lesson")
 public class LessonController {
 
     private final LessonService lessonService;
@@ -23,27 +25,27 @@ public class LessonController {
         this.lessonService = lessonService;
     }
 
-    @GetMapping("lesson")
+    @GetMapping
     public List<LessonDto> getAllGroups(){
 
         return lessonService.getAllLessons();
     }
 
-    @PostMapping("lesson")
+    @PostMapping
     public LessonDto saveLesson(@RequestBody LessonDto lessonDto){
 
         return lessonService.saveLesson(lessonDto);
     }
 
-    @DeleteMapping("lesson/{id}")
+    @DeleteMapping("/{id}")
     public LessonDto deleteLesson(@PathVariable String id){
 
         return lessonService.deleteLesson(id);
     }
 
-    @PutMapping("lesson/{id}")
-    public LessonDto updateLesson(@PathVariable String id, @RequestBody LessonDto lessonDto){
+    @PutMapping
+    public LessonDto updateLesson(@RequestBody LessonDto lessonDto){
 
-        return lessonService.updateLesson(id, lessonDto);
+        return lessonService.updateLesson(lessonDto);
     }
 }

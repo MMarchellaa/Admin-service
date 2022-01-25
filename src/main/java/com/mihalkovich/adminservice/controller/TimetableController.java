@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/timetable")
 public class TimetableController {
 
     private final TimetableService timetableService;
@@ -23,25 +25,25 @@ public class TimetableController {
         this.timetableService = timetableService;
     }
 
-    @GetMapping("timetable/{course}/{group}")
+    @GetMapping("/{course}/{group}")
     public List<TimetableDto> getTimetable(@PathVariable("course") String course, @PathVariable("group") String groupName){
 
         return timetableService.getTimetable(course, groupName);
     }
 
-    @PutMapping("timetable/{id}")
-    public TimetableDto updateTimetable(@PathVariable String id, @RequestBody TimetableDto timetableDto){
+    @PutMapping
+    public TimetableDto updateTimetable(@RequestBody TimetableDto timetableDto){
 
-        return timetableService.updateTimetable(id, timetableDto);
+        return timetableService.updateTimetable(timetableDto);
     }
 
-    @DeleteMapping("timetable/{id}")
+    @DeleteMapping("/{id}")
     public TimetableDto deleteTimetable(@PathVariable String id){
 
         return timetableService.deleteTimetable(id);
     }
 
-    @PostMapping("timetable")
+    @PostMapping
     public TimetableDto saveTimetable(@RequestBody TimetableDto timetableDto){
 
         return timetableService.saveTimetable(timetableDto);
