@@ -39,19 +39,19 @@ public class GroupService {
         return groupRepository.findGroupByCourseAndGroup(course, groupName).orElseThrow();
     }
 
-    public GroupDto deleteGroup(GroupDto groupDto){
-        Group group = getGroup(groupDto.getCourse(), groupDto.getGroup());
+    public GroupDto deleteGroup(String id){
+        Group group = groupRepository.findGroupById(Long.parseLong(id));
         groupRepository.delete(group);
 
-        return groupDto;
+        return groupMapper.toDto(group);
     }
 
-    public GroupDto updateGroup(GroupDto groupDtoBefore, GroupDto groupDtoAfter) {
-        Group group = getGroup(groupDtoBefore.getCourse(), groupDtoBefore.getGroup());
-        group.setCourse(groupDtoAfter.getCourse());
-        group.setGroup(groupDtoAfter.getGroup());
+    public GroupDto updateGroup(String id, GroupDto groupDto) {
+        Group group = groupRepository.findGroupById(Long.parseLong(id));
+        group.setCourse(groupDto.getCourse());
+        group.setGroup(groupDto.getGroup());
         groupRepository.save(group);
 
-        return groupDtoAfter;
+        return groupMapper.toDto(group);
     }
 }

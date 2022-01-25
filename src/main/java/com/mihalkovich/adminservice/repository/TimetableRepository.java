@@ -10,8 +10,7 @@ import java.util.Optional;
 
 @Repository
 public interface TimetableRepository extends JpaRepository<Timetable, Long> {
-
     Optional<List<Timetable>> findAllByGroup(Group group);
-
+    Timetable findTimetableById(Long id);
     Optional<Timetable> getTimetableByDayOfWeekAndGroup(String dayOfWeek, Group group);
 }

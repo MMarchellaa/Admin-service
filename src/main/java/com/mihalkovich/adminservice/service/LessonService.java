@@ -35,24 +35,20 @@ public class LessonService {
                 .collect(Collectors.toList());
     }
 
-    public Lesson getLesson(String teacher, String lessonTitle, String auditory){
-        return lessonRepository.findLessonByTeacherAndLessonTitleAndAuditory(teacher, lessonTitle, auditory).orElseThrow();
-    }
-
-    public LessonDto deleteLesson(LessonDto lessonDto){
-        Lesson lesson = getLesson(lessonDto.getTeacher(), lessonDto.getLessonTitle(), lessonDto.getAuditory());
+    public LessonDto deleteLesson(String id){
+        Lesson lesson = lessonRepository.findLessonById(Long.parseLong(id));
         lessonRepository.delete(lesson);
 
-        return lessonDto;
+        return lessonMapper.toDto(lesson);
     }
 
-    public LessonDto updateLesson(LessonDto lessonDtoBefore, LessonDto lessonDtoAfter) {
-        Lesson lesson = getLesson(lessonDtoBefore.getTeacher(), lessonDtoBefore.getLessonTitle(), lessonDtoBefore.getAuditory());
-        lesson.setTeacher(lessonDtoAfter.getTeacher());
-        lesson.setLessonTitle(lessonDtoAfter.getLessonTitle());
-        lesson.setAuditory(lessonDtoAfter.getAuditory());
+    public LessonDto updateLesson(String id, LessonDto lessonDto) {
+        Lesson lesson = lessonRepository.findLessonById(Long.parseLong(id));
+        lesson.setTeacher(lessonDto.getTeacher());
+        lesson.setLessonTitle(lessonDto.getLessonTitle());
+        lesson.setAuditory(lessonDto.getAuditory());
         lessonRepository.save(lesson);
 
-        return lessonDtoAfter;
+        return lessonMapper.toDto(lesson);
     }
 }

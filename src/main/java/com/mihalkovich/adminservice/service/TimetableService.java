@@ -37,30 +37,26 @@ public class TimetableService {
                 .collect(Collectors.toList());
     }
 
-    public Timetable getSingleTimetable(Group group, String dayOfWeek){
-        return timetableRepository.getTimetableByDayOfWeekAndGroup(dayOfWeek, group).orElse(new Timetable());
-    }
-
     public TimetableDto saveTimetable(TimetableDto timetableDto){
         timetableRepository.save(timetableMapper.toTimetable(timetableDto));
 
         return timetableDto;
     }
 
-    public TimetableDto deleteTimetable(TimetableDto timetableDto){
-        Timetable timetable = getSingleTimetable(timetableDto.getGroup(), timetableDto.getDayOfWeek());
+    public TimetableDto deleteTimetable(String id){
+        Timetable timetable = timetableRepository.findTimetableById(Long.parseLong(id));
         timetableRepository.delete(timetable);
 
-        return timetableDto;
+        return timetableMapper.toDto(timetable);
     }
 
-    public TimetableDto updateTimetable(TimetableDto timetableDtoBefore, TimetableDto timetableDtoAfter) {
-        Timetable timetable = getSingleTimetable(timetableDtoBefore.getGroup(), timetableDtoBefore.getDayOfWeek());
-        timetable.setGroup(timetableDtoAfter.getGroup());
-        timetable.setDayOfWeek(timetableDtoAfter.getDayOfWeek());
-        timetable.setLessons(timetableDtoAfter.getLessons());
+    public TimetableDto updateTimetable(String id, TimetableDto timetableDto) {
+        Timetable timetable = timetableRepository.findTimetableById(Long.parseLong(id));
+        timetable.setGroup(timetableDto.getGroup());
+        timetable.setDayOfWeek(timetableDto.getDayOfWeek());
+        timetable.setLessons(timetableDto.getLessons());
         timetableRepository.save(timetable);
 
-        return timetableDtoAfter;
+        return timetableMapper.toDto(timetable);
     }
 }

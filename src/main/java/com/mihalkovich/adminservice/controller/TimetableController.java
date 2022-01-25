@@ -29,16 +29,16 @@ public class TimetableController {
         return timetableService.getTimetable(course, groupName);
     }
 
-    @PutMapping("timetable")
-    public TimetableDto updateTimetable(@RequestBody TimetableDto timetableDtoBefore, @RequestBody TimetableDto timetableDtoAfter){
+    @PutMapping("timetable/{id}")
+    public TimetableDto updateTimetable(@PathVariable String id, @RequestBody TimetableDto timetableDto){
 
-        return timetableService.updateTimetable(timetableDtoBefore, timetableDtoAfter);
+        return timetableService.updateTimetable(id, timetableDto);
     }
 
-    @DeleteMapping("timetable")
-    public TimetableDto deleteTimetable(@RequestBody TimetableDto timetableDTO){
+    @DeleteMapping("timetable/{id}")
+    public TimetableDto deleteTimetable(@PathVariable String id){
 
-        return timetableService.deleteTimetable(timetableDTO);
+        return timetableService.deleteTimetable(id);
     }
 
     @PostMapping("timetable")

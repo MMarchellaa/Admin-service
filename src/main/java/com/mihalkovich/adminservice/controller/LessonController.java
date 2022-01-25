@@ -5,6 +5,7 @@ import com.mihalkovich.adminservice.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,20 +30,20 @@ public class LessonController {
     }
 
     @PostMapping("lesson")
-    public LessonDto updateTimetable(@RequestBody LessonDto lessonDTO){
+    public LessonDto saveLesson(@RequestBody LessonDto lessonDTO){
 
         return lessonService.saveLesson(lessonDTO);
     }
 
-    @DeleteMapping("lesson")
-    public LessonDto deleteLesson(@RequestBody LessonDto lessonDTO){
+    @DeleteMapping("lesson/{id}")
+    public LessonDto deleteLesson(@PathVariable String id){
 
-        return lessonService.deleteLesson(lessonDTO);
+        return lessonService.deleteLesson(id);
     }
 
-    @PutMapping("lesson")
-    public LessonDto updateLesson(@RequestBody LessonDto lessonDtoBefore, @RequestBody LessonDto lessonDtoAfter){
+    @PutMapping("lesson/{id}")
+    public LessonDto updateLesson(@PathVariable String id, @RequestBody LessonDto lessonDto){
 
-        return lessonService.updateLesson(lessonDtoBefore, lessonDtoAfter);
+        return lessonService.updateLesson(id, lessonDto);
     }
 }

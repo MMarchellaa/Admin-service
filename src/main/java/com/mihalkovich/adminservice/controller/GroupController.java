@@ -5,6 +5,7 @@ import com.mihalkovich.adminservice.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,15 +35,15 @@ public class GroupController {
         return groupService.saveGroup(groupDto);
     }
 
-    @DeleteMapping("group")
-    public GroupDto deleteGroup(@RequestBody GroupDto groupDto){
+    @DeleteMapping("group/{id}")
+    public GroupDto deleteGroup(@PathVariable String id){
 
-        return groupService.deleteGroup(groupDto);
+        return groupService.deleteGroup(id);
     }
 
-    @PutMapping("group")
-    public GroupDto updateGroup(@RequestBody GroupDto groupDtoBefore, @RequestBody GroupDto groupDtoAfter){
+    @PutMapping("group/{id}")
+    public GroupDto updateGroup(@PathVariable String id, @RequestBody GroupDto groupDto){
 
-        return groupService.updateGroup(groupDtoBefore, groupDtoAfter);
+        return groupService.updateGroup(id, groupDto);
     }
 }

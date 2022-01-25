@@ -9,6 +9,7 @@ import java.util.List;
 @Data
 public class TimetableDto {
 
+    private Long id;
     private String dayOfWeek;
     private Group group;
     private List<Lesson> lessons;
