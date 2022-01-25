@@ -6,6 +6,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface TimetableMapper {
+    Timetable toTimetable(TimetableDto timetableDto);
 
-    TimetableDto timetableToTimetableDto(Timetable timetable);
+    TimetableDto toDto(Timetable timetable);
 }

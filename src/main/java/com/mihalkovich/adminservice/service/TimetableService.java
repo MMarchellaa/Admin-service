@@ -33,7 +33,7 @@ public class TimetableService {
 
         return timetableRepository.findAllByGroup(group).orElse(new ArrayList<>())
                 .stream()
-                .map(timetableMapper::timetableToTimetableDto)
+                .map(timetableMapper::toDto)
                 .collect(Collectors.toList());
     }
 
@@ -42,8 +42,7 @@ public class TimetableService {
     }
 
     public TimetableDto saveTimetable(TimetableDto timetableDto){
-        Timetable timetable = new Timetable(timetableDto.getDayOfWeek(), timetableDto.getGroup(), timetableDto.getLessons());
-        timetableRepository.save(timetable);
+        timetableRepository.save(timetableMapper.toTimetable(timetableDto));
 
         return timetableDto;
     }

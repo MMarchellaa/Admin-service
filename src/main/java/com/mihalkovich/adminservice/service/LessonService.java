@@ -24,19 +24,14 @@ public class LessonService {
     }
 
     public LessonDto saveLesson(LessonDto lessonDto){
-
-        Lesson lesson = new Lesson();
-        lesson.setLessonTitle(lessonDto.getLessonTitle());
-        lesson.setAuditory(lessonDto.getAuditory());
-        lesson.setTeacher(lessonDto.getTeacher());
-        lessonRepository.save(lesson);
+        lessonRepository.save(lessonMapper.toLesson(lessonDto));
 
         return lessonDto;
     }
 
     public List<LessonDto> getAllLessons(){
         return lessonRepository.findAll().stream()
-                .map(lessonMapper::lessonToLessonDto)
+                .map(lessonMapper::toDto)
                 .collect(Collectors.toList());
     }
 

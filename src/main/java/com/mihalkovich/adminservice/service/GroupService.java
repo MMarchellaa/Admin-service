@@ -25,16 +25,12 @@ public class GroupService {
 
     public List<GroupDto> getGroups(){
         return groupRepository.findAll().stream()
-                .map(groupMapper::groupToGroupDto)
+                .map(groupMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     public GroupDto saveGroup(GroupDto groupDto){
-
-        Group group = new Group();
-        group.setCourse(groupDto.getCourse());
-        group.setGroup(groupDto.getGroup());
-        groupRepository.save(group);
+        groupRepository.save(groupMapper.toGroup(groupDto));
 
         return groupDto;
     }
