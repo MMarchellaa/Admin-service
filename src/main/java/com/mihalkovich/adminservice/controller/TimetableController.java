@@ -24,7 +24,7 @@ public class TimetableController {
     }
 
     @GetMapping("timetable/{course}/{group}")
-    public List<TimetableDto> getTimetable(@PathVariable("course") String course , @PathVariable("group") String groupName){
+    public List<TimetableDto> getTimetable(@PathVariable("course") String course, @PathVariable("group") String groupName){
 
         return timetableService.getTimetable(course, groupName);
     }
@@ -42,8 +42,8 @@ public class TimetableController {
     }
 
     @PostMapping("timetable")
-    public TimetableDto saveTimetable(@RequestBody TimetableDto timetableDTO){
+    public TimetableDto saveTimetable(@RequestBody TimetableDto timetableDto){
 
-        return timetableService.saveTimetable(timetableDTO);
+        return timetableService.saveTimetable(timetableDto);
     }
 }

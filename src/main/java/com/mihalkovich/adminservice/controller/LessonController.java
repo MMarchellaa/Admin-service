@@ -30,9 +30,9 @@ public class LessonController {
     }
 
     @PostMapping("lesson")
-    public LessonDto saveLesson(@RequestBody LessonDto lessonDTO){
+    public LessonDto saveLesson(@RequestBody LessonDto lessonDto){
 
-        return lessonService.saveLesson(lessonDTO);
+        return lessonService.saveLesson(lessonDto);
     }
 
     @DeleteMapping("lesson/{id}")
