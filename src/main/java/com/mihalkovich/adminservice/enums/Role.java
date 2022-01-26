@@ -1,4 +1,4 @@
-package com.mihalkovich.adminservice.entity.enums;
+package com.mihalkovich.adminservice.enums;
 
 public enum Role {
     ROLE_TEACHER,

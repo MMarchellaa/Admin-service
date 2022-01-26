@@ -47,6 +47,8 @@ public class LessonService {
         lesson.setTeacher(lessonDto.getTeacher());
         lesson.setLessonTitle(lessonDto.getLessonTitle());
         lesson.setAuditory(lessonDto.getAuditory());
+        lesson.setTimeStart(lessonDto.getTimeStart());
+        lesson.setDuration(lessonDto.getDuration());
         lessonRepository.save(lesson);
 
         return lessonMapper.toDto(lesson);

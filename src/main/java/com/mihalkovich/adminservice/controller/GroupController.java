@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class GroupController {
     }
 
     @PostMapping
-    public GroupDto saveGroup(@RequestBody GroupDto groupDto){
+    public GroupDto saveGroup(@RequestBody @Valid GroupDto groupDto){
 
         return groupService.saveGroup(groupDto);
     }
@@ -44,7 +45,7 @@ public class GroupController {
     }
 
     @PutMapping
-    public GroupDto updateGroup(@RequestBody GroupDto groupDto){
+    public GroupDto updateGroup(@RequestBody @Valid GroupDto groupDto){
 
         return groupService.updateGroup(groupDto);
     }

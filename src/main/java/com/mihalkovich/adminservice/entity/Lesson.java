@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -28,4 +29,10 @@ public class Lesson {
 
     @Column
     private String auditory;
+
+    @Column
+    private LocalTime timeStart;
+
+    @Column
+    private LocalTime duration;
 }
