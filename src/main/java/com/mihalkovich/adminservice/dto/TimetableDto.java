@@ -6,10 +6,11 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class TimetableDTO {
+public class TimetableDto {
 
+    private Long id;
     private String dayOfWeek;
     private Group group;
-    private List<LessonDTO> lessons;
+    private List<LessonDto> lessons;
 
 }

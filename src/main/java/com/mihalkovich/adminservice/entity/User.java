@@ -1,5 +1,6 @@
 package com.mihalkovich.adminservice.entity;
 
+import com.mihalkovich.adminservice.entity.enums.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,10 +10,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
 @Data
+@Table(name = "users")
 public class User implements UserDetails {
 
     @Id
@@ -24,6 +27,9 @@ public class User implements UserDetails {
 
     @Column
     private String password;
+
+    @Column
+    private Role role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -9,23 +9,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "students_party")
-public class Group {
+public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "studying_group")
-    private String group;
+    @Column
+    private String lessonTitle;
 
     @Column
-    private String course;
+    private String teacher;
+
+    @Column
+    private String auditory;
 }
