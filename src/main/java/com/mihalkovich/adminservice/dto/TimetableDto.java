@@ -1,6 +1,5 @@
 package com.mihalkovich.adminservice.dto;
 
-import com.mihalkovich.adminservice.entity.Group;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,20 +9,18 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Data
-@ApiModel
+@ApiModel(description = "Data transfer object for timetable entity")
 public class TimetableDto {
 
-    @ApiModelProperty
+    @ApiModelProperty(name = "Identifier")
     private Long id;
     @NotBlank
-    @ApiModelProperty
+    @ApiModelProperty(name = "The day of week")
     private String dayOfWeek;
     @Valid
+    @ApiModelProperty(name = "The group entity")
     private GroupDto group;
-    @Valid
-    @ApiModelProperty
-    private Group group;
-    @ApiModelProperty
+    @ApiModelProperty(name = "Lessons, that will be on the dayOfWeek day")
     private List<LessonDto> lessons;
 
 }

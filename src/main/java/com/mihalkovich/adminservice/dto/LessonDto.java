@@ -11,20 +11,20 @@ import javax.validation.constraints.Size;
 import java.time.LocalTime;
 
 @Data
-@ApiModel
+@ApiModel(description = "Data transfer object for lesson entity")
 public class LessonDto {
 
-    @ApiModelProperty
+    @ApiModelProperty(name = "Identifier")
     private Long id;
-    @ApiModelProperty
+    @ApiModelProperty(name = "Lesson title")
     @NotBlank
     @Size(min = 3, max = 20)
     private String lessonTitle;
-    @ApiModelProperty
+    @ApiModelProperty(name = "Teacher's full name")
     @NotBlank
     @Size(min = 5, max = 20)
     private String teacher;
-    @ApiModelProperty
+    @ApiModelProperty(name = "Number of the auditory")
     @NotBlank
     @Size(min = 1, max = 5)
     private String auditory;

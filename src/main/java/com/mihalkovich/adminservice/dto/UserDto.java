@@ -8,7 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Data
-@ApiModel
+@ApiModel(description = "Data transfer object for user entity")
 public class UserDto {
 
     @ApiModelProperty
