@@ -16,16 +16,17 @@ import javax.persistence.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "students_party")
+@Table(name = "group_table")
 public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "studying_group")
+    @Column(name = "group_name")
     private String group;
 
-    @Column
+    @Column(name = "course_number")
     private String course;
 }

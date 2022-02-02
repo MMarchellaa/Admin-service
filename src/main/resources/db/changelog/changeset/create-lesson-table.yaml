@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-lesson
+      author: Mark
+      changes:
+        - createTable:
+            tableName: lesson_table
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: lesson_title
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: teacher_name
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: auditory
+                  type: varchar(200)
+                  constraints:
+                    nullable: false

@@ -9,23 +9,26 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "lesson_table")
 public class Lesson {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column
+    @Column(name = "lesson_title")
     private String lessonTitle;
 
-    @Column
+    @Column(name = "teacher_name")
     private String teacher;
 
-    @Column
+    @Column(name = "auditory")
     private String auditory;
 }
