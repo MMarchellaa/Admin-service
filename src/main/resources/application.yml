@@ -1,0 +1,28 @@
+spring:
+    liquibase:
+        enabled: true
+    application:
+        name: admin-service
+    mvc:
+        pathmatch:
+            matching-strategy: ant_path_matcher
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        username: habrpguser
+        password: pgpwd4habr
+        url: jdbc:postgresql://localhost:5432/habrdb
+        name: habrdb
+    jpa:
+        hibernate:
+            ddl-auto: none
+        show-sql: true
+        database: postgresql
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        open-in-view: false
+eureka:
+    client:
+        service-url:
+            default-zone: http://localhost:8761/eureka
+server:
+    port: 8000
+

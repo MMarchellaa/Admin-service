@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-group
+      author: Mark
+      changes:
+        - createTable:
+            tableName: timetable_table_lessons
+            columns:
+              - column:
+                  name: timetable_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: timetable_id
+                    references: timetable_table(id)
+              - column:
+                  name: lessons_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: lesson_id
+                    references: lesson_table(id)

@@ -1,0 +1,26 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-timetable
+      author: Mark
+      changes:
+        - createTable:
+            tableName: timetable_table
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: day_of_week
+                  type: varchar(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: group_id
+                    nullable: false
