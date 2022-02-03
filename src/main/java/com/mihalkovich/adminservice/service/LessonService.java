@@ -5,6 +5,8 @@ import com.mihalkovich.adminservice.entity.Lesson;
 import com.mihalkovich.adminservice.mapper.LessonMapper;
 import com.mihalkovich.adminservice.repository.LessonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,18 +25,21 @@ public class LessonService {
         this.lessonMapper = lessonMapper;
     }
 
+    @CacheEvict(value = "lessons", allEntries = true)
     public LessonDto saveLesson(LessonDto lessonDto){
         lessonRepository.save(lessonMapper.toLesson(lessonDto));
 
         return lessonDto;
     }
 
+    @Cacheable("lessons")
     public List<LessonDto> getAllLessons(){
         return lessonRepository.findAll().stream()
                 .map(lessonMapper::toDto)
                 .collect(Collectors.toList());
     }
 
+    @CacheEvict(value = "lessons", allEntries = true)
     public LessonDto deleteLesson(String id){
         Lesson lesson = lessonRepository.findLessonById(Long.parseLong(id));
         lessonRepository.delete(lesson);
@@ -42,6 +47,7 @@ public class LessonService {
         return lessonMapper.toDto(lesson);
     }
 
+    @CacheEvict(value = "lessons", allEntries = true)
     public LessonDto updateLesson(LessonDto lessonDto) {
         Lesson lesson = lessonRepository.findLessonById(lessonDto.getId());
         lesson.setTeacher(lessonDto.getTeacher());
