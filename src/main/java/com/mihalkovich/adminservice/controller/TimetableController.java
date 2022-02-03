@@ -2,6 +2,7 @@ package com.mihalkovich.adminservice.controller;
 
 import com.mihalkovich.adminservice.dto.TimetableDto;
 import com.mihalkovich.adminservice.service.TimetableService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/timetable")
+@RequestMapping("/api/admin/timetable")
 public class TimetableController {
 
     private final TimetableService timetableService;
@@ -27,24 +28,28 @@ public class TimetableController {
     }
 
     @GetMapping("/{course}/{group}")
+    @ApiOperation(value = "Get timetable")
     public List<TimetableDto> getTimetable(@PathVariable("course") String course, @PathVariable("group") String groupName){
 
         return timetableService.getTimetable(course, groupName);
     }
 
     @PutMapping
+    @ApiOperation(value = "Update timetable")
     public TimetableDto updateTimetable(@RequestBody @Valid TimetableDto timetableDto){
 
         return timetableService.updateTimetable(timetableDto);
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete timetable")
     public TimetableDto deleteTimetable(@PathVariable String id){
 
         return timetableService.deleteTimetable(id);
     }
 
     @PostMapping
+    @ApiOperation(value = "Save timetable")
     public TimetableDto saveTimetable(@RequestBody @Valid TimetableDto timetableDto){
 
         return timetableService.saveTimetable(timetableDto);
