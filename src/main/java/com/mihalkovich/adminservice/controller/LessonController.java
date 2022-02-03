@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -32,7 +33,7 @@ public class LessonController {
     }
 
     @PostMapping
-    public LessonDto saveLesson(@RequestBody LessonDto lessonDto){
+    public LessonDto saveLesson(@RequestBody @Valid LessonDto lessonDto){
 
         return lessonService.saveLesson(lessonDto);
     }
@@ -44,7 +45,7 @@ public class LessonController {
     }
 
     @PutMapping
-    public LessonDto updateLesson(@RequestBody LessonDto lessonDto){
+    public LessonDto updateLesson(@RequestBody @Valid LessonDto lessonDto){
 
         return lessonService.updateLesson(lessonDto);
     }
